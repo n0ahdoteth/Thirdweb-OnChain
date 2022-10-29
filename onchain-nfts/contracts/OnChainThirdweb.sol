@@ -20,8 +20,8 @@ contract OnChainThirdweb is ERC721Base {
         )
     {}
 
-    string[] private names = ['John', 'Sam', 'Noah', 'Susan', 'Will', 'Jane'];
-    string[] private locations = ['New York', 'Hong Kong', 'Tokyo', 'Lisbon', 'SF'];
+    string[] private blockchains = ['Ethereum', 'Solana', 'Arbitrum', 'Fantom', 'Polygon', 'Bitcoin'];
+    string[] private dapps = ['Aave', 'Orca', 'Uniswap', 'MakerDAO', 'Magic Eden'];
     string[] private industry = ["Tech", "Blockchain", "Finance", "VC"];
     
     function pluck(uint256 tokenId, string memory keyPrefix, string[] memory sourceArray) internal view returns (string memory){
@@ -41,7 +41,7 @@ contract OnChainThirdweb is ERC721Base {
 
         parts[3] = getLocation(tokenId);
 
-        parts[4] = '</text><text x="10" y="40" class="base">';
+        parts[4] = '</text><text x="10" y="80" class="base">';
 
         parts[6] = getIndustry(tokenId);
 
@@ -93,10 +93,8 @@ contract OnChainThirdweb is ERC721Base {
         return pluck(tokenId, "Industry", industry);
     }
 
-    
-    
-    function claim(uint256 tokenId) public {
-        require(tokenId > 0 && tokenId < 10000);
+    function claim(uint256 _amount) public {
+        require(_amount > 0 && _amount < 6);
         _safeMint(msg.sender, tokenId);
     }
 }
