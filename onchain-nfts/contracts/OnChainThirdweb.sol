@@ -48,7 +48,7 @@ contract OnChainThirdweb is ERC721Base {
         parts[7] = '</text></svg>';
 
         string memory output = 
-            string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[5], parts[6], parts[7]));
+            string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]));
 
         string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "Person: ', toString(tokenId), '", "description": "OnChain NFTs created with Thirdweb!", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(output)), '"}'))));
         output = string(abi.encodePacked('data:application/json;base64,', json));
