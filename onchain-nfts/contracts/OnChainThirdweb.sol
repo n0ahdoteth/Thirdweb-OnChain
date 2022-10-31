@@ -22,7 +22,7 @@ contract OnChainThirdweb is ERC721Base {
 
     string[] private blockchains = ['Ethereum', 'Solana', 'Arbitrum', 'Fantom', 'Polygon', 'Bitcoin'];
     string[] private dapps = ['Aave', 'Orca', 'Uniswap', 'MakerDAO', 'Magic Eden'];
-    string[] private industry = ["Tech", "Blockchain", "Finance", "VC"];
+    string[] private tokens = ["$ETH", "$SOL", "$BTC", "$AVAX"];
     
     function pluck(uint256 tokenId, string memory keyPrefix, string[] memory sourceArray) internal view returns (string memory){
         uint256 rand = random(string(abi.encodePacked(keyPrefix, toString(tokenId))));
@@ -35,15 +35,15 @@ contract OnChainThirdweb is ERC721Base {
 
         parts[0] = '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 350 350"><style>.base { fill: white; font-family: serif; font-size: 14px; }</style><rect width="100%" height="100%" fill="black" /><text x="10" y="20" class="base">';
 
-        parts[1] = getName(tokenId);
+        parts[1] = getBlockchain(tokenId);
 
         parts[2] = '</text><text x="10" y="40" class="base">';
 
-        parts[3] = getLocation(tokenId);
+        parts[3] = getDapp(tokenId);
 
-        parts[4] = '</text><text x="10" y="80" class="base">';
+        parts[4] = '</text><text x="10" y="60" class="base">';
 
-        parts[6] = getIndustry(tokenId);
+        parts[6] = getToken(tokenId);
 
         parts[7] = '</text></svg>';
 
@@ -81,20 +81,20 @@ contract OnChainThirdweb is ERC721Base {
         return uint256(keccak256(abi.encodePacked(input)));
     }
     
-    function getName(uint256 tokenId) public view returns (string memory){
-        return pluck(tokenId, "Names", names);
+    function getBlockchain(uint256 tokenId) public view returns (string memory){
+        return pluck(tokenId, "Blockchains", blockchains);
     }
 
-    function getLocation(uint256 tokenId) public view returns (string memory){
-        return pluck(tokenId, "Locations", locations);
+    function getDapp(uint256 tokenId) public view returns (string memory){
+        return pluck(tokenId, "Dapps", dapps);
     }
 
-    function getIndustry(uint256 tokenId) public view returns (string memory){
-        return pluck(tokenId, "Industry", industry);
+    function getToken(uint256 tokenId) public view returns (string memory){
+        return pluck(tokenId, "Tokens", tokens);
     }
 
     function claim(uint256 _amount) public {
         require(_amount > 0 && _amount < 6);
-        _safeMint(msg.sender, tokenId);
+        _safeMint(msg.sender, _amount);
     }
 }
